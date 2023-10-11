@@ -225,8 +225,6 @@ remove_missing <- function()
 
 
 # test your function
-
-
 penguins_cleaned <- remove_missing(penguins)
 dim(penguins)
 dim(penguins_cleaned)
@@ -249,7 +247,7 @@ get_rsquared <- function()
 get_rsquared()
 ```
 
-# BONUS:
+# BONUS!!
 
 This section assumes knowledge of the tidyverse functions and syntax.
 
