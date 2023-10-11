@@ -1,0 +1,380 @@
+---
+output:
+  html_document:
+    df_print: paged
+    code_download: TRUE
+    toc: true
+    toc_depth: 1
+editor_options:
+  chunk_output_type: console
+---
+
+# Writing your own functions
+
+In this workshop we are going to learn some advanced concepts that are going to make you into a full-fledged R programmer. Before this you may have only used the built-in functions R came with, as well as the functions contained in packages. Today we will learn about building functions ourselves.
+
+```{r}
+install.packages("tidyverse")
+install.packages("palmerpenguins")
+```
+
+## Declaring functions in R
+
+The standard syntax to declare functions in R is as follows:
+
+```         
+function_name <- function(arguments) {
+  expressions
+  return(value) # optional
+}
+```
+
+Suppose you want to create the following function: $$f(x) = 1/\sqrt{x}$$ Writing this in R is quite simple:
+
+```{r}
+my_function <- function(x) {
+  1/sqrt(x)
+}
+```
+
+The argument of the function, `x`, gets passed to the `function()` function and the *body* of the function contains the function definition. Of course, you could define functions that use more than one input.
+
+```{r}
+my_function <- function(x, y) {
+  1/sqrt(x + y)
+}
+```
+
+Functions written by the user get called just the same way as functions included in R:
+
+```{r}
+my_function(20, 100)
+```
+
+You could also provide default values to the function's arguments, which are values that are used if the user omits them:
+
+```{r}
+my_function <- function(x, y=1){
+  1/sqrt(x + y)
+}
+
+# call the function
+my_function(20)
+```
+
+What if you don't know how many arguments you will have to the function?
+
+For example, say you are collecting the grades of all students who gave an exam to calculate the average, but different numbers of students give the exam each year. You can pass a list or vector of values as the function argument as below:
+
+```{r}
+# define the function
+average_grade_calculator <- function(x) {
+  mean(x)
+}
+
+# call the function
+grades <-  c(45, 67, 89, 99, 100, 34, 78, 94)
+average_grade_calculator(grades)
+```
+
+What if you wanted to calculate two different values, such as the mean and the standard deviation?
+
+To be able to do this, you must put your values in a list, and return the list of values. For example:
+
+```{r}
+# define the function
+average_and_sd_calculator <- function(x) {
+  c(mean(x), sd(x))
+}
+
+# call the function
+average_and_sd_calculator(grades)
+```
+
+You're still returning a single object, but it's a vector.
+
+You can also return a named list:
+
+```{r}
+# define the function
+average_and_sd_calculator <- function(x) {
+  list("mean_grade" = mean(x),
+       "sd_grade" = sd(x))
+}
+
+# call the function
+average_and_sd_calculator(grades)
+```
+
+In general, function names should be of the form: `function_name()`. Verbs or action words are preferred. Always give your function very explicit names!
+
+### EXERCISE
+
+Write a function to calculate the volume of a cube given the length, width, and height values
+
+```{r}
+
+```
+
+### EXERCISE
+
+Write a function to calculate present age given birth year. Add the current year as a default value for the calculation
+
+```{r}
+
+```
+
+## Returning values
+
+Usually, the last evaluated value is returned as the function output. Therefore the function below will only return one value as the output.
+
+Let's re-write the `average_and_sd_calculator` function to see how this works:
+
+```{r}
+# define the function
+average_and_sd_calculator <- function(x) {
+  mean_x = mean(x)
+  sd_x = sd(x)
+}
+
+# call the function
+average_and_sd_calculator(grades)
+```
+
+What did the function return? Essentially, the function evaluated all the statements but did not return any value since it was not asked to! In order to write robust code, you can use an explicit `return()` statement at the end of your functions to return the values you are interested in.
+
+```{r}
+# define the function
+average_and_sd_calculator <- function(x) {
+  mean_x = mean(x)
+  sd_x = sd(x)
+  
+  return(mean_x)
+}
+
+# call the function
+average_and_sd_calculator(grades)
+```
+
+You are still returning a single object as earlier, but doing so more explicitly.
+
+Let's see what happens when we try to return two objects explicitly with a `return()` statement:
+
+```{r}
+# define the function
+average_and_sd_calculator <- function(x) {
+  mean_x = mean(x)
+  sd_x = sd(x)
+  
+  return(mean_x, sd_x) # does not work
+}
+
+# call the function
+average_and_sd_calculator(grades)
+```
+
+We can bundle together several objects and return them as a single list of vector:
+
+```{r}
+# ------return as a vector------
+average_and_sd_calculator <- function(x) {
+  mean_x = mean(x)
+  sd_x = sd(x)
+  
+  return(c(mean_x, sd_x)) # works!
+}
+
+# call the function
+average_and_sd_calculator(grades)
+
+
+# ------return as a list------
+average_and_sd_calculator <- function(x) {
+  mean_x = mean(x)
+  sd_x = sd(x)
+  
+  return(list(mean_x, sd_x)) # also works!
+}
+
+# call the function
+average_and_sd_calculator(grades)
+
+
+# ------return as a named list------
+average_and_sd_calculator <- function(x) {
+  mean_x = mean(x)
+  sd_x = sd(x)
+  
+  return(list("mean_grade" = mean_x, "sd_grade" = sd_x)) # also works!
+}
+
+# call the function
+average_and_sd_calculator(grades)
+```
+
+### EXERCISE
+
+Write a function which takes a data frame as input, removes any rows with missing values and returns the cleaned data with all complete observations back. Test your function on the `penguins` data set from package `{palmerpenguins}`.
+
+```{r}
+# explore the penguins dataset
+library(palmerpenguins)
+View(penguins)
+names(penguins)
+```
+
+Hint: `na.omit(dataframe)` returns a dataframe with no missing values
+
+```{r}
+# HINT:
+clean_df <- na.omit(df)
+
+# write your function
+remove_missing <- function()
+
+
+
+# test your function
+
+
+penguins_cleaned <- remove_missing(penguins)
+dim(penguins)
+dim(penguins_cleaned)
+```
+
+### EXERCISE
+
+Write a function which takes in two vectors `x` and `y` and returns the $R^2$ value for a linear model y \~ x. Use it to find the $R^2$ value for a linear fit between `body_mass_g` and `bill_length_mm` for the `penguins` data. Hint: use `summary` on the output of `lm` and extract the `r.squared`
+
+```{r}
+# HINT:
+r_sq_value <- summary(lm(y ~ x))$r.squared
+
+# write your function
+get_rsquared <- function()
+
+
+
+# test your function
+get_rsquared(penguins$body_mass_g, penguins$bill_length_mm)
+```
+
+# BONUS:
+
+This section assumes knowledge of the tidyverse functions and syntax.
+
+## Passing columns of data to functions with `{{}}`
+
+So far we have looked at functions that take vectors as arguments, however, in many situations, you will want to write functions that look similar to this:
+
+```         
+my_function(my_data, one_column_inside_data)
+```
+
+Such a function will be useful in situations where you will have to apply a certain number of operations to columns for different data frames. For example if you need to create tables of descriptive statistics or graphs periodically, it might be more efficient to put these operations inside a function and then call the function whenever you need it, on the fresh batch of data.
+
+Let's see how that approach might work:
+
+```{r}
+library(tidyverse)
+
+# get the mean value of a column
+simple_function <- function(dataset, col_name) {
+  
+  dataset %>% 
+    summarize(mean = mean(col_name, na.rm=TRUE))
+}
+
+# call the function
+simple_function(penguins, "body_mass_g")
+```
+
+This did not work! The variable `col_name` is passed to `simple_function()` as a string, but `group_by()` requires a variable name.
+
+To be able to pass column names of your data as arguments, we need to use a framework that was introduced in the `{tidyverse}`, called *tidy evaluation*. This framework can be used by installing the `{rlang}` package version 0.4.0 or higher.
+
+Let's rewrite the function from before with curly curly syntax:
+
+```{r}
+# function using tidyeval
+simple_function <- function(dataset, col_name) {
+  
+  dataset %>% 
+    summarize(mean = mean({{col_name}}, na.rm=TRUE))
+}
+
+# call tidyeval function
+simple_function(penguins, body_mass_g)
+```
+
+Let's see another example:
+
+```{r}
+simple_function <- function(dataset, filter_col, mean_col, value) {
+  
+  dataset %>% 
+    filter( {{filter_col}} == value) %>% 
+    summarize(mean = mean( {{mean_col}} , na.rm=TRUE))
+}
+
+simple_function(penguins, sex, body_mass_g, "female")
+```
+
+### EXERCISE
+
+Write a function `how_many_na` which counts the number of missing values for a given column of a dataset. Using this function, find the number of missing values for `sex` in `penguins`
+
+```{r}
+# HINT:
+num_missing_vals <- sum(is.na(penguins$sex)) # expected number of missing values
+
+# write your function with {{}} syntax
+how_many_na <- function()
+  
+  
+  
+# test your function
+how_many_na(dataframe, column_name)
+
+
+```
+
+### Practical example for `{{}}`
+
+A very useful application for `{{}}` is for making plot templates.
+
+```{r}
+# plot code
+penguins %>% 
+    ggplot(aes(x = flipper_length_mm, y = body_mass_g, group = species)) +
+    geom_point(aes(color = species), size=2, alpha=0.8) +
+    geom_smooth(aes(color = species, fill = species), method="lm", alpha =0.1) +
+    theme_classic() + labs(title = "Penguins Data Scatterplot")
+```
+
+Let's make this into a function:
+
+```{r}
+# functionalized plot code
+scatterplot_with_lm <- function(data, x_col, y_col, grouping_var, title) {
+  data %>% 
+    ggplot(aes(x = {{x_col}}, y = {{y_col}}, group = {{grouping_var}})) +
+    geom_point(aes( color = {{grouping_var}}), size=2, alpha=0.8) +
+    geom_smooth(aes(color = {{grouping_var}}, fill = {{grouping_var}}), 
+                method="lm", alpha =0.1) +
+    theme_classic() + labs(title = title)
+}
+```
+
+Call this function several times to make different plots
+
+```{r}
+# call on penguins data
+scatterplot_with_lm(penguins, flipper_length_mm, body_mass_g, species, "penguins Data")
+scatterplot_with_lm(penguins, bill_length_mm, body_mass_g, species, "penguins Data")
+scatterplot_with_lm(penguins, bill_depth_mm, body_mass_g, species, "penguins Data")
+
+# call on a different dataset
+scatterplot_with_lm(mtcars, wt, mpg, gear, "mtcars Data")
+scatterplot_with_lm(mtcars, wt, mpg, factor(gear), "mtcars Data")
+```
