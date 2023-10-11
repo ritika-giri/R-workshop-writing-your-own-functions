@@ -93,19 +93,6 @@ average_and_sd_calculator(grades)
 
 You're still returning a single object, but it's a vector.
 
-You can also return a named list:
-
-```{r}
-# define the function
-average_and_sd_calculator <- function(x) {
-  list("mean_grade" = mean(x),
-       "sd_grade" = sd(x))
-}
-
-# call the function
-average_and_sd_calculator(grades)
-```
-
 In general, function names should be of the form: `function_name()`. Verbs or action words are preferred. Always give your function very explicit names!
 
 ### EXERCISE
@@ -176,7 +163,8 @@ average_and_sd_calculator(grades)
 We can bundle together several objects and return them as a single list of vector:
 
 ```{r}
-# ------return as a vector------
+# -------- return as a vector ------------------------------
+
 average_and_sd_calculator <- function(x) {
   mean_x = mean(x)
   sd_x = sd(x)
@@ -188,7 +176,8 @@ average_and_sd_calculator <- function(x) {
 average_and_sd_calculator(grades)
 
 
-# ------return as a list------
+# -------- return as a list ---------------------------------
+
 average_and_sd_calculator <- function(x) {
   mean_x = mean(x)
   sd_x = sd(x)
@@ -200,7 +189,8 @@ average_and_sd_calculator <- function(x) {
 average_and_sd_calculator(grades)
 
 
-# ------return as a named list------
+# -------- return as a named list ----------------------------
+
 average_and_sd_calculator <- function(x) {
   mean_x = mean(x)
   sd_x = sd(x)
@@ -223,7 +213,7 @@ View(penguins)
 names(penguins)
 ```
 
-Hint: `na.omit(dataframe)` returns a dataframe with no missing values
+Hint: `na.omit(dataframe)` returns a data frame with no missing values
 
 ```{r}
 # HINT:
@@ -252,11 +242,11 @@ r_sq_value <- summary(lm(y ~ x))$r.squared
 
 # write your function
 get_rsquared <- function()
-
+  
 
 
 # test your function
-get_rsquared(penguins$body_mass_g, penguins$bill_length_mm)
+get_rsquared()
 ```
 
 # BONUS:
