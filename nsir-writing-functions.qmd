@@ -95,7 +95,7 @@ You're still returning a single object, but it's a vector.
 
 In general, function names should be of the form: `function_name()`. Verbs or action words are preferred. Always give your function very explicit names!
 
-### EXERCISE
+### EXERCISE 1
 
 Write a function to calculate the volume of a cube given the length, width, and height values
 
@@ -103,7 +103,7 @@ Write a function to calculate the volume of a cube given the length, width, and 
 
 ```
 
-### EXERCISE
+### EXERCISE 2
 
 Write a function to calculate present age given birth year. Add the current year as a default value for the calculation
 
@@ -160,11 +160,10 @@ average_and_sd_calculator <- function(x) {
 average_and_sd_calculator(grades)
 ```
 
-We can bundle together several objects and return them as a single list of vector:
+We can bundle together several objects and return them as a single list or vector:
 
 ```{r}
-# -------- return as a vector ------------------------------
-
+# return as a vector
 average_and_sd_calculator <- function(x) {
   mean_x = mean(x)
   sd_x = sd(x)
@@ -174,10 +173,10 @@ average_and_sd_calculator <- function(x) {
 
 # call the function
 average_and_sd_calculator(grades)
+```
 
-
-# -------- return as a list ---------------------------------
-
+```{r}
+# return as a list
 average_and_sd_calculator <- function(x) {
   mean_x = mean(x)
   sd_x = sd(x)
@@ -187,10 +186,10 @@ average_and_sd_calculator <- function(x) {
 
 # call the function
 average_and_sd_calculator(grades)
+```
 
-
-# -------- return as a named list ----------------------------
-
+```{r}
+# return as a named list
 average_and_sd_calculator <- function(x) {
   mean_x = mean(x)
   sd_x = sd(x)
@@ -202,7 +201,9 @@ average_and_sd_calculator <- function(x) {
 average_and_sd_calculator(grades)
 ```
 
-### EXERCISE
+The named list takes out any ambiguity about which elements represent which values.
+
+### EXERCISE 3
 
 Write a function which takes a data frame as input, removes any rows with missing values and returns the cleaned data with all complete observations back. Test your function on the `penguins` data set from package `{palmerpenguins}`.
 
@@ -226,11 +227,13 @@ remove_missing <- function()
 
 # test your function
 penguins_cleaned <- remove_missing(penguins)
-dim(penguins)
-dim(penguins_cleaned)
+nrows(penguins)
+nrows(penguins_cleaned)
 ```
 
-### EXERCISE
+Is there a difference in the number of rows between the original and cleaned data frame?
+
+### EXERCISE 4
 
 Write a function which takes in two vectors `x` and `y` and returns the $R^2$ value for a linear model y \~ x. Use it to find the $R^2$ value for a linear fit between `body_mass_g` and `bill_length_mm` for the `penguins` data. Hint: use `summary` on the output of `lm` and extract the `r.squared`
 
@@ -295,7 +298,7 @@ simple_function <- function(dataset, col_name) {
 simple_function(penguins, body_mass_g)
 ```
 
-Let's see another example:
+Let's see another example, this time with two different columns being passed to the function:
 
 ```{r}
 simple_function <- function(dataset, filter_col, mean_col, value) {
@@ -308,7 +311,7 @@ simple_function <- function(dataset, filter_col, mean_col, value) {
 simple_function(penguins, sex, body_mass_g, "female")
 ```
 
-### EXERCISE
+### EXERCISE 5
 
 Write a function `how_many_na` which counts the number of missing values for a given column of a dataset. Using this function, find the number of missing values for `sex` in `penguins`
 
@@ -344,6 +347,7 @@ Let's make this into a function:
 
 ```{r}
 # functionalized plot code
+
 scatterplot_with_lm <- function(data, x_col, y_col, grouping_var, title) {
   data %>% 
     ggplot(aes(x = {{x_col}}, y = {{y_col}}, group = {{grouping_var}})) +
