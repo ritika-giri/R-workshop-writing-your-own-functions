@@ -15,3 +15,7 @@ Taught by Ritika Giri Fall Quarter of 2023 Northwestern University's Research Co
 * README.md markdown file outlining the repository
 * .Rproj folder maintaning an R Project for this directory
 * nsir-writing-functions.qmd Quarto document with the workshop contents
+
+# Required Installs
+* R and RStudio
+* Packages: `tidyverse` and `palmerpenguins`
