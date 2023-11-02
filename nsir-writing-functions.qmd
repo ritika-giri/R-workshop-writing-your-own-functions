@@ -235,7 +235,9 @@ Is there a difference in the number of rows between the original and cleaned dat
 
 ### EXERCISE 4
 
-Write a function which takes in two vectors `x` and `y` and returns the $R^2$ value for a linear model y \~ x. Use it to find the $R^2$ value for a linear fit between `body_mass_g` and `bill_length_mm` for the `penguins` data. Hint: use `summary` on the output of `lm` and extract the `r.squared`
+Write a function which takes in two vectors `x` and `y` and returns the $R^2$ value for a linear model y \~ x.
+
+Use it to find the $R^2$ value for a linear fit between `body_mass_g` and `bill_length_mm` for the `penguins` data. Hint: use `summary` on the output of `lm` and extract the `r.squared`
 
 ```{r}
 # HINT:
@@ -269,14 +271,26 @@ Let's see how that approach might work:
 ```{r}
 library(tidyverse)
 
-# get the mean value of a column
+# function to get the mean value of a column
 simple_function <- function(dataset, col_name) {
   
   dataset %>% 
     summarize(mean = mean(col_name, na.rm=TRUE))
 }
+```
 
+Let's see how this tidyverse expression works in general, using the `penguins` dataset as an example.
+
+```{r}
+penguins %>% 
+  summarize(mean = mean(body_mass_g, na.rm=TRUE))
+```
+
+Now let's call the same expression using the `simple_function` we created above:
+
+```{r}
 # call the function
+simple_function(penguins, body_mass_g)
 simple_function(penguins, "body_mass_g")
 ```
 
@@ -287,7 +301,7 @@ To be able to pass column names of your data as arguments, we need to use a fram
 Let's rewrite the function from before with curly curly syntax:
 
 ```{r}
-# function using tidyeval
+# function using tidy eval syntax
 simple_function <- function(dataset, col_name) {
   
   dataset %>% 
