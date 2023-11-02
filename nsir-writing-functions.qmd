@@ -97,7 +97,7 @@ In general, function names should be of the form: `function_name()`. Verbs or ac
 
 ### EXERCISE 1
 
-Write a function to calculate the volume of a cube given the length, width, and height values
+Write a function to calculate the volume of a cube given the length, width, and height values. Remember, the volume of a cube is the product of all three dimensions.
 
 ```{r}
 
@@ -105,7 +105,7 @@ Write a function to calculate the volume of a cube given the length, width, and 
 
 ### EXERCISE 2
 
-Write a function to calculate present age given birth year. Add the current year as a default value for the calculation
+Write a function to calculate a person's present age given their birth year. Add the current year (2023) as a default value for the calculation.
 
 ```{r}
 
