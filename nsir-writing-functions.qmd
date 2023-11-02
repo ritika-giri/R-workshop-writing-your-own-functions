@@ -362,11 +362,11 @@ Let's make this into a function:
 ```{r}
 # functionalized plot code
 
-scatterplot_with_lm <- function(data, x_col, y_col, grouping_var, title) {
+scatterplot_with_lm <- function(data, x_col, y_col, grouping_col, title) {
   data %>% 
-    ggplot(aes(x = {{x_col}}, y = {{y_col}}, group = {{grouping_var}})) +
-    geom_point(aes( color = {{grouping_var}}), size=2, alpha=0.8) +
-    geom_smooth(aes(color = {{grouping_var}}, fill = {{grouping_var}}), 
+    ggplot(aes(x = {{x_col}}, y = {{y_col}}, group = {{grouping_col}})) +
+    geom_point(aes( color = {{grouping_col}}), size=2, alpha=0.8) +
+    geom_smooth(aes(color = {{grouping_col}}, fill = {{grouping_col}}), 
                 method="lm", alpha =0.1) +
     theme_classic() + labs(title = title)
 }
