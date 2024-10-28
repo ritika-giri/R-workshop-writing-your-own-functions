@@ -1,5 +1,5 @@
 # Workshop on writing functions in R
-Taught by Ritika Giri Fall Quarter of 2023 Northwestern University's Research Computing and Data Services
+Taught by Ritika Giri, Northwestern University IT Research Computing and Data Services
 
 
 # Getting Started
