@@ -105,7 +105,7 @@ Write a function to calculate the volume of a cube given the length, width, and 
 
 ### EXERCISE 2
 
-Write a function to calculate a person's present age given their birth year. Add the current year (2023) as a default value for the calculation.
+Write a function to calculate a person's present age given their birth year. Add the current year as a default value for the calculation.
 
 ```{r}
 
@@ -189,19 +189,21 @@ average_and_sd_calculator(grades)
 ```
 
 ```{r}
-# return as a named list
+# return as a named list (or named vector)
 average_and_sd_calculator <- function(x) {
   mean_x = mean(x)
   sd_x = sd(x)
   
   return(list("mean_grade" = mean_x, "sd_grade" = sd_x)) # also works!
+  # Alternatively, return a named vector
+  # return(c("mean_grade" = mean_x, "sd_grade" = sd_x))
 }
 
 # call the function
 average_and_sd_calculator(grades)
 ```
 
-The named list takes out any ambiguity about which elements represent which values.
+Named vectors or named lists allow the user to specify a name for each element. Thus, naming takes out any ambiguity about which elements represent which values.
 
 ### EXERCISE 3
 
@@ -266,7 +268,14 @@ my_function(my_data, one_column_inside_data)
 
 Such a function will be useful in situations where you will have to apply a certain number of operations to columns for different data frames. For example if you need to create tables of descriptive statistics or graphs periodically, it might be more efficient to put these operations inside a function and then call the function whenever you need it, on the fresh batch of data.
 
-Let's see how that approach might work:
+First, let's see the tidyverse way of performing this task. Suppose I want to calculate the mean of a column from a dataframe, in this case the mean of column `body_mass_g` from `penguins` dataframe.
+
+```{r}
+penguins %>% 
+  summarize(mean = mean(body_mass_g, na.rm=TRUE))
+```
+
+Now let's try to convert the code above into a function
 
 ```{r}
 library(tidyverse)
@@ -279,14 +288,7 @@ simple_function <- function(dataset, col_name) {
 }
 ```
 
-Let's see how this tidyverse expression works in general, using the `penguins` dataset as an example.
-
-```{r}
-penguins %>% 
-  summarize(mean = mean(body_mass_g, na.rm=TRUE))
-```
-
-Now let's call the same expression using the `simple_function` we created above:
+Now let's call the same expression for mean of `penguins` column `body_mass_g` using the `simple_function` we created above:
 
 ```{r}
 # call the function
